@@ -1,0 +1,392 @@
+[
+  {
+    "key": "360-therapy-chicago-1",
+    "originalAddress": "7101 N Cicero Ave #203, Chicago, IL 60712",
+    "query": "7101 N Cicero Ave, Lincolnwood, IL 60712",
+    "matches": [
+      {
+        "tigerLine": {
+          "side": "R",
+          "tigerLineId": "111740843"
+        },
+        "coordinates": {
+          "x": -87.747917398678,
+          "y": 42.010073195728
+        },
+        "addressComponents": {
+          "zip": "60712",
+          "streetName": "CICERO",
+          "preType": "",
+          "city": "LINCOLNWOOD",
+          "preDirection": "N",
+          "suffixDirection": "",
+          "fromAddress": "7101",
+          "state": "IL",
+          "suffixType": "AVE",
+          "toAddress": "7199",
+          "suffixQualifier": "",
+          "preQualifier": ""
+        },
+        "matchedAddress": "7101 N CICERO AVE, LINCOLNWOOD, IL, 60712"
+      }
+    ]
+  },
+  {
+    "key": "360-therapy-chicago-2",
+    "originalAddress": "715 E Golf Road, Suite 200A1, A8, Schaumburg, IL 60174",
+    "query": "715 E Golf Road, Schaumburg, IL",
+    "matches": [
+      {
+        "tigerLine": {
+          "side": "L",
+          "tigerLineId": "605986348"
+        },
+        "coordinates": {
+          "x": -88.062729214822,
+          "y": 42.049810570009
+        },
+        "addressComponents": {
+          "zip": "60173",
+          "streetName": "GOLF",
+          "preType": "",
+          "city": "SCHAUMBURG",
+          "preDirection": "",
+          "suffixDirection": "",
+          "fromAddress": "601",
+          "state": "IL",
+          "suffixType": "RD",
+          "toAddress": "799",
+          "suffixQualifier": "",
+          "preQualifier": ""
+        },
+        "matchedAddress": "715 GOLF RD, SCHAUMBURG, IL, 60173"
+      }
+    ]
+  },
+  {
+    "key": "360-therapy-chicago-3",
+    "originalAddress": "666 Dundee Road, Suite 1302, Northbrook, IL 60062",
+    "query": "666 Dundee Road, Northbrook, IL",
+    "matches": [
+      {
+        "tigerLine": {
+          "side": "R",
+          "tigerLineId": "111839960"
+        },
+        "coordinates": {
+          "x": -87.795380459064,
+          "y": 42.137994640796
+        },
+        "addressComponents": {
+          "zip": "60062",
+          "streetName": "DUNDEE",
+          "preType": "",
+          "city": "NORTHBROOK",
+          "preDirection": "",
+          "suffixDirection": "",
+          "fromAddress": "698",
+          "state": "IL",
+          "suffixType": "RD",
+          "toAddress": "630",
+          "suffixQualifier": "",
+          "preQualifier": ""
+        },
+        "matchedAddress": "666 DUNDEE RD, NORTHBROOK, IL, 60062"
+      }
+    ]
+  },
+  {
+    "key": "3pt-1",
+    "originalAddress": "918 Roosevelt Rd, Glen Ellyn, IL 60137",
+    "query": "918 Roosevelt Rd, Glen Ellyn, IL",
+    "matches": []
+  },
+  {
+    "key": "3pt-2",
+    "originalAddress": "19805 S LaGrange Rd, Mokena, IL 60448",
+    "query": "19805 S LaGrange Rd, Mokena, IL",
+    "matches": [
+      {
+        "tigerLine": {
+          "side": "L",
+          "tigerLineId": "656667178"
+        },
+        "coordinates": {
+          "x": -87.850140896589,
+          "y": 41.531154733461
+        },
+        "addressComponents": {
+          "zip": "60448",
+          "streetName": "LA GRANGE",
+          "preType": "",
+          "city": "MOKENA",
+          "preDirection": "S",
+          "suffixDirection": "",
+          "fromAddress": "19701",
+          "state": "IL",
+          "suffixType": "RD",
+          "toAddress": "19845",
+          "suffixQualifier": "",
+          "preQualifier": ""
+        },
+        "matchedAddress": "19805 S LA GRANGE RD, MOKENA, IL, 60448"
+      }
+    ]
+  },
+  {
+    "key": "3pt-3",
+    "originalAddress": "624 N York St, Unit C, Elmhurst, IL 60126",
+    "query": "624 N York St, Elmhurst, IL",
+    "matches": [
+      {
+        "tigerLine": {
+          "side": "L",
+          "tigerLineId": "112544658"
+        },
+        "coordinates": {
+          "x": -87.939799785169,
+          "y": 41.918999410252
+        },
+        "addressComponents": {
+          "zip": "60126",
+          "streetName": "YORK",
+          "preType": "",
+          "city": "ELMHURST",
+          "preDirection": "N",
+          "suffixDirection": "",
+          "fromAddress": "600",
+          "state": "IL",
+          "suffixType": "ST",
+          "toAddress": "624",
+          "suffixQualifier": "",
+          "preQualifier": ""
+        },
+        "matchedAddress": "624 N YORK ST, ELMHURST, IL, 60126"
+      }
+    ]
+  },
+  {
+    "key": "3pt-4",
+    "originalAddress": "4817 W 95th St, Oak Lawn, IL 60453",
+    "query": "4817 W 95th St, Oak Lawn, IL",
+    "matches": [
+      {
+        "tigerLine": {
+          "side": "L",
+          "tigerLineId": "111817934"
+        },
+        "coordinates": {
+          "x": -87.741443819084,
+          "y": 41.720004583098
+        },
+        "addressComponents": {
+          "zip": "60453",
+          "streetName": "95TH",
+          "preType": "",
+          "city": "OAK LAWN",
+          "preDirection": "W",
+          "suffixDirection": "",
+          "fromAddress": "4801",
+          "state": "IL",
+          "suffixType": "ST",
+          "toAddress": "4831",
+          "suffixQualifier": "",
+          "preQualifier": ""
+        },
+        "matchedAddress": "4817 W 95TH ST, OAK LAWN, IL, 60453"
+      }
+    ]
+  },
+  {
+    "key": "3pt-5",
+    "originalAddress": "1415 W 47th St, La Grange, IL 60525",
+    "query": "1415 W 47th St, La Grange, IL",
+    "matches": [
+      {
+        "tigerLine": {
+          "side": "R",
+          "tigerLineId": "111789600"
+        },
+        "coordinates": {
+          "x": -87.887670354292,
+          "y": 41.804736979615
+        },
+        "addressComponents": {
+          "zip": "60525",
+          "streetName": "47TH",
+          "preType": "",
+          "city": "LA GRANGE",
+          "preDirection": "W",
+          "suffixDirection": "",
+          "fromAddress": "1401",
+          "state": "IL",
+          "suffixType": "ST",
+          "toAddress": "1499",
+          "suffixQualifier": "",
+          "preQualifier": ""
+        },
+        "matchedAddress": "1415 W 47TH ST, LA GRANGE, IL, 60525"
+      }
+    ]
+  },
+  {
+    "key": "3pt-6",
+    "originalAddress": "1695 Plainfield Rd, Crest Hill, IL 60403",
+    "query": "1695 Plainfield Rd, Crest Hill, IL",
+    "matches": [
+      {
+        "tigerLine": {
+          "side": "L",
+          "tigerLineId": "111557031"
+        },
+        "coordinates": {
+          "x": -88.125749698183,
+          "y": 41.554808973779
+        },
+        "addressComponents": {
+          "zip": "60403",
+          "streetName": "PLAINFIELD",
+          "preType": "",
+          "city": "CREST HILL",
+          "preDirection": "",
+          "suffixDirection": "",
+          "fromAddress": "1693",
+          "state": "IL",
+          "suffixType": "RD",
+          "toAddress": "1695",
+          "suffixQualifier": "",
+          "preQualifier": ""
+        },
+        "matchedAddress": "1695 PLAINFIELD RD, CREST HILL, IL, 60403"
+      }
+    ]
+  },
+  {
+    "key": "3pt-7",
+    "originalAddress": "2225 W North Ave, Melrose Ave, IL 60160",
+    "query": "2225 W North Ave, Melrose Park, IL",
+    "matches": [
+      {
+        "tigerLine": {
+          "side": "L",
+          "tigerLineId": "657046039"
+        },
+        "coordinates": {
+          "x": -87.861155663928,
+          "y": 41.908023456764
+        },
+        "addressComponents": {
+          "zip": "60160",
+          "streetName": "NORTH",
+          "preType": "",
+          "city": "MELROSE PARK",
+          "preDirection": "W",
+          "suffixDirection": "",
+          "fromAddress": "2299",
+          "state": "IL",
+          "suffixType": "AVE",
+          "toAddress": "2201",
+          "suffixQualifier": "",
+          "preQualifier": ""
+        },
+        "matchedAddress": "2225 W NORTH AVE, MELROSE PARK, IL, 60160"
+      }
+    ]
+  },
+  {
+    "key": "3pt-8",
+    "originalAddress": "1511 N Convent St, Suite 1000, Bourbonnais, IL 60914",
+    "query": "1511 N Convent St, Bourbonnais, IL",
+    "matches": [
+      {
+        "tigerLine": {
+          "side": "L",
+          "tigerLineId": "98365617"
+        },
+        "coordinates": {
+          "x": -87.875645955482,
+          "y": 41.178923433257
+        },
+        "addressComponents": {
+          "zip": "60914",
+          "streetName": "CONVENT",
+          "preType": "",
+          "city": "BOURBONNAIS",
+          "preDirection": "N",
+          "suffixDirection": "",
+          "fromAddress": "1501",
+          "state": "IL",
+          "suffixType": "ST",
+          "toAddress": "1599",
+          "suffixQualifier": "",
+          "preQualifier": ""
+        },
+        "matchedAddress": "1511 N CONVENT ST, BOURBONNAIS, IL, 60914"
+      }
+    ]
+  },
+  {
+    "key": "brightmore-1",
+    "originalAddress": "1240 Essington Rd, Suite 100, Joliet, IL 60435",
+    "query": "1240 Essington Rd, Joliet, IL",
+    "matches": [
+      {
+        "tigerLine": {
+          "side": "L",
+          "tigerLineId": "111621724"
+        },
+        "coordinates": {
+          "x": -88.160797092956,
+          "y": 41.544144629335
+        },
+        "addressComponents": {
+          "zip": "60435",
+          "streetName": "ESSINGTON",
+          "preType": "",
+          "city": "JOLIET",
+          "preDirection": "",
+          "suffixDirection": "",
+          "fromAddress": "1398",
+          "state": "IL",
+          "suffixType": "RD",
+          "toAddress": "1200",
+          "suffixQualifier": "",
+          "preQualifier": ""
+        },
+        "matchedAddress": "1240 ESSINGTON RD, JOLIET, IL, 60435"
+      }
+    ]
+  },
+  {
+    "key": "brightmore-2",
+    "originalAddress": "23909 W Renwick Rd, Suite 101, Plainfield, IL 60544",
+    "query": "23909 W Renwick Rd, Plainfield, IL",
+    "matches": [
+      {
+        "tigerLine": {
+          "side": "R",
+          "tigerLineId": "656705356"
+        },
+        "coordinates": {
+          "x": -88.198948471634,
+          "y": 41.593969158412
+        },
+        "addressComponents": {
+          "zip": "60544",
+          "streetName": "RENWICK",
+          "preType": "",
+          "city": "PLAINFIELD",
+          "preDirection": "W",
+          "suffixDirection": "",
+          "fromAddress": "23999",
+          "state": "IL",
+          "suffixType": "RD",
+          "toAddress": "23901",
+          "suffixQualifier": "",
+          "preQualifier": ""
+        },
+        "matchedAddress": "23909 W RENWICK RD, PLAINFIELD, IL, 60544"
+      }
+    ]
+  }
+]

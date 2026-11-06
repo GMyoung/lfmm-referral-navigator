@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Search Labor Force referral locations for pain management, physical therapy, behavioral therapy and imaging." />
+    <title>Labor Force Referral Navigator</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%230f766e'/%3E%3Ctext x='32' y='42' text-anchor='middle' font-family='Arial' font-size='29' font-weight='700' fill='white'%3ELF%3C/text%3E%3C/svg%3E" />
+    <link rel="preconnect" href="https://unpkg.com" />
+    <link rel="preconnect" href="https://tile.openstreetmap.org" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <link rel="stylesheet" href="./styles.css?v=20261106" />
+  </head>
+  <body>
+    <svg class="icon-sprite" aria-hidden="true">
+      <symbol id="icon-search" viewBox="0 0 24 24">
+        <circle cx="10.7" cy="10.7" r="6.2"></circle>
+        <path d="m15.2 15.2 4.3 4.3"></path>
+      </symbol>
+      <symbol id="icon-pin" viewBox="0 0 24 24">
+        <path d="M19 10c0 4.7-7 10.5-7 10.5S5 14.7 5 10a7 7 0 1 1 14 0Z"></path>
+        <circle cx="12" cy="10" r="2.2"></circle>
+      </symbol>
+      <symbol id="icon-locate" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="5.5"></circle>
+        <circle cx="12" cy="12" r="1.5"></circle>
+        <path d="M12 3v2.2M12 18.8V21M3 12h2.2M18.8 12H21"></path>
+      </symbol>
+      <symbol id="icon-chevron-right" viewBox="0 0 24 24">
+        <path d="m9 6 6 6-6 6"></path>
+      </symbol>
+      <symbol id="icon-chevron-down" viewBox="0 0 24 24">
+        <path d="m6 9 6 6 6-6"></path>
+      </symbol>
+      <symbol id="icon-close" viewBox="0 0 24 24">
+        <path d="m6.5 6.5 11 11M17.5 6.5l-11 11"></path>
+      </symbol>
+      <symbol id="icon-search-off" viewBox="0 0 24 24">
+        <circle cx="10.5" cy="10.5" r="5.8"></circle>
+        <path d="m14.8 14.8 4.4 4.4M7.8 7.8l5.4 5.4"></path>
+      </symbol>
+      <symbol id="icon-check" viewBox="0 0 24 24">
+        <path d="m6.5 12.2 3.4 3.5 7.7-8"></path>
+      </symbol>
+    </svg>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="Labor Force Referral Navigator home">
+          <img class="brand-logo" src="./lfmm-logo.jpeg" alt="" aria-hidden="true" />
+          <span>
+            <strong>Referral Navigator</strong>
+            <small>Labor Force Medical Management</small>
+          </span>
+        </a>
+        <div class="topbar-meta">
+          <span class="network-pill"><i></i> Referral directory</span>
+        </div>
+      </header>
+      
+
+      <nav class="referral-navigation" aria-label="Referral services">
+        <button type="button" data-service="all" aria-pressed="true">All services</button>
+        <button type="button" data-service="Pain Management" aria-pressed="false">IPM</button>
+        <button type="button" data-service="Physical Therapy" aria-pressed="false">Physical therapy</button>
+        <button type="button" data-service="Behavioral Therapy" aria-pressed="false">Behavioral therapy</button>
+        <button type="button" data-service="Imaging" aria-pressed="false">Imaging</button>
+      </nav>
+      <section class="search-wrap" aria-label="Provider search">
+        <div class="search-deck">
+          <div class="search-field primary-search">
+            <svg class="ui-icon search-icon" aria-hidden="true"><use href="#icon-search"></use></svg>
+            <label for="provider-search">Search referral locations</label>
+            <input id="provider-search" type="search" autocomplete="off" placeholder="Network, branch, city or address..." />
+            <kbd>Ctrl K</kbd>
+          </div>
+          <div class="search-field location-search">
+            <svg class="ui-icon pin-icon" aria-hidden="true"><use href="#icon-pin"></use></svg>
+            <label for="location-search">Near</label>
+            <input id="location-search" type="search" autocomplete="off" spellcheck="false" maxlength="200" placeholder="Start typing an address, city or ZIP" role="combobox" aria-autocomplete="list" aria-haspopup="listbox" aria-controls="location-suggestions" aria-expanded="false" aria-describedby="location-help" />
+            <button class="locate-button" id="use-location" type="button" aria-label="Use my current location" title="Use my current location">
+              <svg class="ui-icon" aria-hidden="true"><use href="#icon-locate"></use></svg>
+            </button>
+            <div class="location-suggestion-panel" id="location-suggestion-panel" hidden>
+              <ul id="location-suggestions" role="listbox" aria-label="Suggested locations"></ul>
+              <p id="location-suggestion-status" class="location-suggestion-status" role="status" aria-live="polite" hidden></p>
+              <p class="location-suggestion-credit">Suggestions near the map area · <a href="https://photon.komoot.io/" target="_blank" rel="noreferrer">Photon</a> / <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">OpenStreetMap</a></p>
+            </div>
+          </div>
+          <button class="search-button" id="search-button" type="button">Search</button>
+        </div>
+        <p class="location-help" id="location-help">Type to see suggestions, then choose an address. Suggestions use Photon; street numbers are checked with the <a href="https://www.census.gov/programs-surveys/geography/technical-documentation/complete-technical-documentation/census-geocoder.html" target="_blank" rel="noreferrer">U.S. Census Geocoder</a>.</p>
+        <div class="location-notice" id="location-notice" role="status" aria-live="polite" hidden></div>
+        <section class="address-candidates" id="address-candidates" aria-labelledby="address-candidates-heading" hidden>
+          <h2 id="address-candidates-heading">Choose a matching address</h2>
+          <div id="address-candidate-options"></div>
+        </section>
+      </section>
+
+      <nav class="filter-strip" aria-label="Quick filters">
+        <label class="select-chip">
+          <span id="specialty-label">All services</span>
+          <select id="specialty-filter" aria-label="Filter by specialty"></select>
+          <svg class="ui-icon select-chevron" aria-hidden="true" focusable="false"><use href="#icon-chevron-down"></use></svg>
+        </label>
+        <label class="select-chip">
+          <span id="body-label">Any body area</span>
+          <select id="body-filter" aria-label="Filter by body area"></select>
+          <svg class="ui-icon select-chevron" aria-hidden="true" focusable="false"><use href="#icon-chevron-down"></use></svg>
+        </label>
+        <button class="filter-chip" id="quick-detailed" type="button" aria-pressed="false">Address listed</button>
+        <button class="filter-chip" id="quick-mapped" type="button" aria-pressed="false">On map</button>
+        <button class="filter-chip more-filter" id="more-filter" type="button" aria-expanded="false">More filters <span id="advanced-count">0</span></button>
+        <button class="clear-button" id="clear-filters" type="button">Clear all</button>
+      </nav>
+
+      <main class="workspace">
+        <section class="results-panel" aria-labelledby="results-heading">
+          <div class="results-toolbar">
+            <div>
+              <p class="eyebrow">REFERRAL NETWORK</p>
+              <h1 id="results-heading"><span id="result-count">0</span> <span id="result-noun">networks</span></h1>
+            </div>
+            <label class="sort-control">
+              <span>Sort</span>
+              <span class="sort-select">
+                <select id="sort-select" aria-label="Sort results">
+                  <option value="source" selected>List order</option>
+                  <option value="distance">Distance</option>
+                  <option value="name">Name A–Z</option>
+                  <option value="city">City</option>
+                </select>
+                <svg class="ui-icon select-chevron" aria-hidden="true" focusable="false"><use href="#icon-chevron-down"></use></svg>
+              </span>
+            </label>
+          </div>
+          <p class="directory-note"><strong id="location-count">0</strong> locations across these networks · Confirm current availability and case acceptance with the office.</p>
+          <div class="active-summary" id="active-summary"></div>
+          <div class="area-filter-banner" id="area-filter-banner" hidden>
+            <span>Map area filter is active</span>
+            <button id="clear-map-area" type="button">Clear area</button>
+          </div>
+          <div class="provider-list" id="provider-list" aria-live="polite"></div>
+          <div class="empty-state" id="empty-state" hidden>
+            <div class="empty-icon"><svg class="ui-icon" aria-hidden="true"><use href="#icon-search-off"></use></svg></div>
+            <h2>No exact matches</h2>
+            <p>Try another body area, case type, or nearby city.</p>
+            <button type="button" id="empty-reset">Reset filters</button>
+          </div>
+        </section>
+
+        <section class="map-panel" aria-label="Provider locations">
+          <div id="map"></div>
+          <div class="map-status" id="map-status"><span class="pulse-dot"></span>Map and list are linked</div>
+          <button class="map-research" id="map-research" type="button">Search this area</button>
+          <div class="map-legend" id="map-legend" aria-label="Map category legend"></div>
+        </section>
+      </main>
+      <button class="mobile-view-toggle" id="mobile-view-toggle" type="button" aria-label="Switch between list and map">
+        <span class="mobile-list-label">Map view</span>
+        <span class="mobile-map-label">List view</span>
+      </button>
+    </div>
+
+    <div class="scrim" id="scrim" hidden></div>
+
+    <aside class="side-sheet filter-sheet" id="filter-sheet" role="dialog" aria-modal="true" aria-label="Advanced filters" aria-hidden="true">
+      <div class="sheet-head">
+        <div><p class="detail-kicker">REFINE RESULTS</p><h2>More filters</h2></div>
+        <button class="sheet-close" id="filter-close" type="button" aria-label="Close filters"><svg class="ui-icon" aria-hidden="true"><use href="#icon-close"></use></svg></button>
+      </div>
+      <fieldset class="filter-group">
+        <legend>Directory coverage</legend>
+        <label class="check-row"><input id="detailed-only" type="checkbox" /> <span><strong>Street address on file</strong><small>Has a street address in the directory</small></span></label>
+        <label class="check-row"><input id="mapped-only" type="checkbox" /> <span><strong>Mapped locations only</strong><small>Can be displayed and measured on the map</small></span></label>
+        <label class="check-row"><input id="exclude-pending" type="checkbox" /> <span><strong>Open locations only</strong><small>Hide locations marked Coming Soon</small></span></label>
+      </fieldset>
+<fieldset class="filter-group">
+        <legend>Distance radius</legend>
+        <div class="segmented-control" id="radius-control">
+          <label><input type="radio" name="radius" value="25" checked /><span>25 mi</span></label>
+          <label><input type="radio" name="radius" value="50" /><span>50 mi</span></label>
+          <label><input type="radio" name="radius" value="100" /><span>100 mi</span></label>
+        </div>
+        <p class="field-help">Applies after selecting an address, city/ZIP or your current location.</p>
+      </fieldset>
+      <fieldset class="filter-group filter-group-last">
+        <legend>Case type</legend>
+        <label class="radio-row"><input type="radio" name="case-type" value="all" checked /> <span>All cases</span></label>
+        <label class="radio-row"><input type="radio" name="case-type" value="Workers’ Comp" /> <span>Workers’ Comp</span></label>
+        <p class="field-help">WC-listed networks follow the supplied referral list. Confirm the current case with the chosen office.</p>
+      </fieldset>
+      <div class="sheet-actions filter-sheet-actions">
+        <button id="advanced-reset" type="button">Reset</button>
+        <button class="primary" id="advanced-apply" type="button">Show results</button>
+      </div>
+    </aside>
+
+    <aside class="side-sheet detail-sheet" id="detail-sheet" role="dialog" aria-modal="true" aria-label="Provider details" aria-hidden="true">
+      <button class="sheet-close floating-close" id="sheet-close" type="button" aria-label="Close details"><svg class="ui-icon" aria-hidden="true"><use href="#icon-close"></use></svg></button>
+      <div id="detail-content"></div>
+    </aside>
+
+    <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="./data.js?v=20261106"></script>
+    <script src="./zip-centers.js?v=20261106"></script>
+    <script src="./location-utils.js?v=20261106"></script>
+    <script src="./address-geocoder.js?v=20261106"></script>
+    <script src="./address-suggestions.js?v=20261106"></script>
+    <script src="./contacts.js?v=20261106"></script>
+    <script src="./app.js?v=20261106"></script>
+  </body>
+</html>
