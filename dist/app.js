@@ -400,11 +400,10 @@ function render() {
   emptyState.hidden = matches.length > 0;
   list.hidden = matches.length === 0;
   if (!matches.length) {
-    const missingCategory = ["Physical Therapy", "Chiropractic", "Neurology", "Rehabilitation", "Diagnostics"].includes(state.specialty);
-    emptyState.querySelector("h2").textContent = missingCategory ? "No verified listings yet" : "No exact matches";
-    emptyState.querySelector("p").textContent = missingCategory
-      ? state.specialty + " is part of the directory design, but no verified source records have been supplied yet."
-      : (state.origin ? "Try a larger radius, another specialty, or clear the map-area filter." : "Try another body area, case type, address, city, or ZIP.");
+    emptyState.querySelector("h2").textContent = "No matching networks";
+    emptyState.querySelector("p").textContent = state.origin
+      ? "Try a larger radius, another service, or clear the map-area filter."
+      : "Try another service, address, city or ZIP.";
   }
   $("#area-filter-banner").hidden = !state.mapBounds;
   updateFilterSummary(matches);
