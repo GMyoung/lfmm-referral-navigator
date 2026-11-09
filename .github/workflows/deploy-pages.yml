@@ -25,6 +25,8 @@ jobs:
         uses: actions/checkout@v4
       - name: Validate static JavaScript
         run: |
+          node --check dist/image-upload.js
+          node --check dist/directory-editor.js
           node --check dist/contacts.js
           node --check dist/app.js
           node --check dist/data.js

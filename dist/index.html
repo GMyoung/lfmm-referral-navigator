@@ -10,6 +10,7 @@
     <link rel="preconnect" href="https://tile.openstreetmap.org" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     <link rel="stylesheet" href="./styles.css?v=20261106" />
+    <link rel="stylesheet" href="./directory-editor.css?v=20261109" />
   </head>
   <body>
     <svg class="icon-sprite" aria-hidden="true">
@@ -53,9 +54,11 @@
           </span>
         </a>
         <div class="topbar-meta">
+          <button class="edit-directory-button" id="edit-directory" type="button">Edit directory</button>
           <span class="network-pill"><i></i> Referral directory</span>
         </div>
       </header>
+      <div class="directory-sync-bar" id="directory-sync-bar" role="status"><span id="directory-sync-message">Loading shared directory…</span><button id="directory-refresh" type="button">Refresh data</button><button id="directory-add-provider" type="button" hidden>Add provider</button><button id="directory-lock" type="button" hidden>Exit editing</button></div>
       
 
       <nav class="referral-navigation" aria-label="Referral services">
@@ -202,12 +205,15 @@
 
     <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    <script src="./data.js?v=20261106"></script>
+    <dialog id="editor-login" class="editor-login" aria-labelledby="editor-login-title"><form id="editor-login-form"><h2 id="editor-login-title">Edit referral directory</h2><p>Enter the directory editing password.</p><label for="editor-password">Password</label><input id="editor-password" type="password" autocomplete="current-password" required maxlength="256"><p id="editor-login-error" class="editor-error" role="alert"></p><div class="editor-login-actions"><button type="button" id="editor-login-cancel">Cancel</button><button type="submit" class="primary-button">Start editing</button></div></form></dialog>
+    <script src="./data.js?v=20261109-editor"></script>
     <script src="./zip-centers.js?v=20261106"></script>
     <script src="./location-utils.js?v=20261106"></script>
     <script src="./address-geocoder.js?v=20261106"></script>
     <script src="./address-suggestions.js?v=20261106"></script>
     <script src="./contacts.js?v=20261106"></script>
-    <script src="./app.js?v=20261106"></script>
+    <script src="./image-upload.js?v=20261109"></script>
+    <script src="./directory-editor.js?v=20261109"></script>
+    <script src="./app.js?v=20261109-editor"></script>
   </body>
 </html>

@@ -10716,5 +10716,6 @@ window.LFMM_REFERRAL_DATA = {
       "order": 12,
       "wcApprovalBasis": "User-supplied WC imaging referral list, 2026-11-06"
     }
-  ]
+  ],
+  "rosterVersion": "referral-v1"
 };

@@ -177,9 +177,21 @@ function doctorPhoto(provider, large=false) {
     (provider.photoUrl?'<img data-provider-photo src="'+escapeHtml(provider.photoUrl)+'" alt="'+escapeHtml(provider.name+(isLogo?' logo':''))+'" loading="lazy" decoding="async" referrerpolicy="no-referrer">':'')+'</span>';
 }
 
-function doctorNoteTemplate(provider) {
-  if (!provider.staffNotes?.trim()) return "";
-  return '<span class="doctor-note"><span class="doctor-note-heading"><strong>Note</strong></span><span class="doctor-note-text">'+escapeHtml(provider.staffNotes)+'</span></span>';
+function doctorNoteTemplate(provider, editable=false) {
+  if (!editable && !provider.staffNotes?.trim() && !provider.referralBlocked) return "";
+  return '<span class="doctor-note'+(provider.referralBlocked?' referral-blocked':'')+'"><span class="doctor-note-heading"><strong>Note</strong>'+
+    (provider.referralBlocked?'<strong class="referral-blocked-badge">Do not refer</strong>':'')+
+    (editable?'<button type="button" class="doctor-note-edit" data-action="edit-note" data-provider-id="'+escapeHtml(provider.id)+'">'+(provider.staffNotes?.trim()?'Edit note':'Add note')+'</button>':'')+
+    '</span><span class="doctor-note-text">'+escapeHtml(provider.staffNotes||'No note added.')+'</span></span>';
+}
+
+function inactiveProvidersSection() {
+  if (!window.LFMM_EDITOR?.enabled) return "";
+  const inactive=providers.filter(provider=>provider.inactive);
+  if (!inactive.length) return "";
+  return '<section class="inactive-doctors"><h2>Inactive providers <span>'+inactive.length+'</span></h2><p>Activate a provider to display it in the directory.</p><div class="inactive-provider-list">'+inactive.map(provider=>
+    '<div class="inactive-provider-row">'+cardTemplate(provider)+'<div class="inactive-card-actions"><button type="button" class="activate-doctor-button" data-activate-provider-id="'+escapeHtml(provider.id)+'">Activate provider</button></div></div>'
+  ).join('')+'</div></section>';
 }
 
 function doctorLocationsSection(provider) {
@@ -396,9 +408,10 @@ function render() {
   count.textContent = matches.length;
   $("#result-noun").textContent = matches.length===1?"network":"networks";
   $("#location-count").textContent = matches.reduce((total,provider)=>total+providerLocations(provider).length,0);
-  list.innerHTML = matches.map(cardTemplate).join("");
+  const inactiveSection=inactiveProvidersSection();
+  list.innerHTML = matches.map(cardTemplate).join("") + inactiveSection;
   emptyState.hidden = matches.length > 0;
-  list.hidden = matches.length === 0;
+  list.hidden = matches.length === 0 && !inactiveSection;
   if (!matches.length) {
     emptyState.querySelector("h2").textContent = "No matching networks";
     emptyState.querySelector("p").textContent = state.origin
@@ -713,7 +726,7 @@ function detailTemplate(provider) {
     '<div class="detail-category"><span class="detail-category-mark" aria-hidden="true">', escapeHtml(category.symbol), '</span><p class="detail-kicker">', escapeHtml(category.label), "</p></div>",
     "<h2>", escapeHtml(provider.name), "</h2>",
     provider.wcApproved ? '<span class="wc-list-badge">WC approved list</span>' : "",
-    doctorNoteTemplate(provider),
+    doctorNoteTemplate(provider,true),
     '<p class="detail-subtitle">', escapeHtml([provider.specialty,provider.practice].filter(Boolean).join(" · ")), "</p>",
     '</div></div>',
     "</section>",
@@ -748,7 +761,7 @@ function focusProviderOnMap(provider, locationId) {
 
 function selectProvider(id, openSheet, locationId) {
   const provider = providers.find((item) => item.id === id);
-  if (!provider || provider.inactive) return;
+  if (!provider || provider.inactive && !window.LFMM_EDITOR?.enabled) return;
   map?.closePopup();
   hoveredProviderId = null;
   focusedProviderId = null;
@@ -817,7 +830,8 @@ function openPanel(panel) {
 }
 
 function openDetails(provider) {
-  if (provider.inactive) return;
+  if (provider.inactive && !window.LFMM_EDITOR?.enabled) return;
+  if (window.LFMM_EDITOR?.enabled) { window.LFMM_EDITOR.open(provider); return; }
   detailContent.innerHTML = detailTemplate(provider);
   openPanel(detailSheet);
 }
@@ -1079,6 +1093,8 @@ function focusTrap(event) {
 }
 
 list.addEventListener("click", (event) => {
+  const activate=event.target.closest("[data-activate-provider-id]");
+  if(activate){const provider=providers.find(p=>p.id===activate.dataset.activateProviderId);if(provider)void window.LFMM_EDITOR?.activate(provider);return;}
   const card = event.target.closest("[data-provider-id]");
   if (card) {
     const match = state.lastMatches.find(provider => provider.id === card.dataset.providerId);
@@ -1205,10 +1221,11 @@ $("#map-research").addEventListener("click", () => {
 });
 
 detailContent.addEventListener("click", (event) => {
-  const action = event.target.closest('[data-action="show-doctor-location"]');
+  const action = event.target.closest('[data-action="show-doctor-location"], [data-action="edit-note"]');
   if (!action) return;
   const provider = providers.find(item => item.id === action.dataset.providerId);
   if (!provider) return;
+  if(action.dataset.action==="edit-note"){window.LFMM_EDITOR?.openNote(provider);return;}
   if(action.dataset.action==="show-doctor-location"){
     showOfficeOnMap(provider, action.dataset.locationId);return;
   }
@@ -1246,3 +1263,4 @@ locationSuggestions = window.LFMM_ADDRESS_SUGGESTIONS.create({
 });
 render();
 focusCurrentMatches();
+window.LFMM_EDITOR?.initialize();
